@@ -9,14 +9,14 @@ Gem::Specification.new do |s|
   s.summary     = "Add gacha functionality to any Rails model."
   s.description = "GachaPon brings Japanese gacha culture to Rails. Easily add weighted random selection with history tracking to any model."
 
-  s.required_ruby_version = ">= 3.0.0"
+  s.required_ruby_version = ">= 3.1.0"
   s.license = "MIT"
 
   s.author   = "tanakakc"
   s.email    = "tanakakc@example.com"
   s.homepage = "https://github.com/tanakakc/gacha_pon"
 
-  s.files = [ "README.md", "SPEC.md" ]
+  s.files = [ "README.md" ]
 
   s.metadata = {
     "homepage_uri"      => s.homepage,
@@ -25,5 +25,5 @@ Gem::Specification.new do |s|
     "rubygems_mfa_required" => "true"
   }
 
-  s.add_dependency "rails", ">= 7.0"
+  s.add_dependency "rails", ">= 7.1"
 end
