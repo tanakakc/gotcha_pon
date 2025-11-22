@@ -16,13 +16,13 @@ Gem::Specification.new do |s|
   s.email    = "tanakakc@example.com"
   s.homepage = "https://github.com/tanakakc/gacha_pon"
 
-  s.files = ["README.md", "SPEC.md"]
+  s.files = [ "README.md", "SPEC.md" ]
 
   s.metadata = {
     "homepage_uri"      => s.homepage,
     "source_code_uri"   => s.homepage,
     "changelog_uri"     => "#{s.homepage}/blob/main/CHANGELOG.md",
-    "rubygems_mfa_required" => "true",
+    "rubygems_mfa_required" => "true"
   }
 
   s.add_dependency "rails", ">= 7.0"
