@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     gacha_pon (0.1.0)
-      rails (>= 7.0)
+      rails (>= 7.1)
 
 GEM
   remote: https://rubygems.org/
