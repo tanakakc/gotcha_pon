@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    gacha_pon (0.1.0)
+    gotcha_pon (0.1.0)
       rails (>= 8.0)
 
 GEM
@@ -271,7 +271,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
-  gacha_pon!
+  gotcha_pon!
   minitest (~> 5.0)
   rubocop-rails-omakase
   sqlite3 (~> 2.1)
