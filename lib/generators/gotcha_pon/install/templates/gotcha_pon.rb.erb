@@ -1,0 +1,10 @@
+# frozen_string_literal: true
+
+# GotchaPon configuration
+# This file is used to configure the GotchaPon gem.
+
+# Uncomment the lines below to customize the configuration:
+
+# GotchaPon.configure do |config|
+#   # Add any configuration options here
+# end

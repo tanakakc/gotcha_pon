@@ -1,22 +1,22 @@
 # frozen_string_literal: true
 
-require_relative "lib/gacha_pon/version"
+require_relative "lib/gotcha_pon/version"
 
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
-  s.name        = "gacha_pon"
-  s.version     = GachaPon::VERSION
+  s.name        = "gotcha_pon"
+  s.version     = GotchaPon::VERSION
   s.summary     = "Add gacha functionality to any Rails model."
-  s.description = "GachaPon brings Japanese gacha culture to Rails. Easily add weighted random selection with history tracking to any model."
+  s.description = "GotchaPon brings Japanese gacha culture to Rails. Easily add weighted random selection with history tracking to any model."
 
   s.required_ruby_version = ">= 3.2.0"
   s.license = "MIT"
 
   s.author   = "tanakakc"
   s.email    = "tanakakc@example.com"
-  s.homepage = "https://github.com/tanakakc/gacha_pon"
+  s.homepage = "https://github.com/tanakakc/gotcha_pon"
 
-  s.files = [ "README.md" ]
+  s.files = Dir["lib/**/*", "README.md"]
 
   s.metadata = {
     "homepage_uri"      => s.homepage,
