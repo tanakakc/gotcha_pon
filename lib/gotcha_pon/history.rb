@@ -2,14 +2,17 @@
 
 module GotchaPon
   class History < ActiveRecord::Base
-    self.table_name = 'gotcha_pon_histories'
+    self.table_name = "gotcha_pon_histories"
 
     # Polymorphic associations
-    belongs_to :user, polymorphic: true
+    belongs_to :user, polymorphic: true, optional: true
     belongs_to :gotchable, polymorphic: true
 
+    def user
+      super || GotchaPon::NullUser.instance
+    end
+
     # Validations
-    validates :user, presence: true
     validates :gotchable, presence: true
 
     # Scopes

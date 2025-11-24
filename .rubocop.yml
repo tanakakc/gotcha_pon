@@ -1,2 +1,15 @@
-inherit_gem:
-  rubocop-rails-omakase: rubocop.yml
+# Omakase Ruby styling for Rails
+inherit_gem: { rubocop-rails-omakase: rubocop.yml }
+
+# Exclude ERB templates and other non-Ruby files
+AllCops:
+  Exclude:
+    - 'lib/generators/**/templates/**/*'
+    - 'test/dummy/**/*'
+    - 'vendor/**/*'
+
+# Overwrite or add rules to create your own house style
+#
+# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
+# Layout/SpaceInsideArrayLiteralBrackets:
+#   Enabled: false

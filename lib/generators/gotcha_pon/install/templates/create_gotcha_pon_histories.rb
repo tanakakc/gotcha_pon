@@ -1,7 +1,7 @@
 class CreateGotchaPonHistories < ActiveRecord::Migration[<%= ActiveRecord::Migration.current_version %>]
   def change
     create_table :gotcha_pon_histories do |t|
-      t.references :user, polymorphic: true, null: false, index: true
+      t.references :user, polymorphic: true, null: true, index: true
       t.references :gotchable, polymorphic: true, null: false, index: true
       t.datetime :executed_at, null: false, default: -> { 'CURRENT_TIMESTAMP' }
       t.json :metadata, default: {}
