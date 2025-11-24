@@ -16,7 +16,7 @@ module GotchaPon
       end
 
       # Execute gacha - returns items and records history if enabled
-      def gotcha_pon(user: GotchaPon::NullUser.instance, count: 1)
+      def gotcha_pon(user: nil, count: 1)
         items = where(id: pluck(:id).sample(count)).to_a
         GotchaPon::History.record_gotcha(user: user, items: items) if gotcha_pon_track_history
         count == 1 ? items.first : items

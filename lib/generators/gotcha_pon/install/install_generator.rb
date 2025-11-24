@@ -1,32 +1,26 @@
 # frozen_string_literal: true
 
-require 'rails/generators'
-require 'rails/generators/migration'
+require "rails/generators/active_record"
 
 module GotchaPon
   module Generators
-    class InstallGenerator < Rails::Generators::Base
+    class InstallGenerator < ::Rails::Generators::Base
       include Rails::Generators::Migration
-      
-      source_root File.expand_path('templates', __dir__)
-      
-      desc "Creates GotchaPon migration and model"
-      
+
+      source_root File.expand_path("templates", __dir__)
+
+      desc "Creates GotchaPon migration and initializer"
+
       def self.next_migration_number(dirname)
-        Time.now.utc.strftime("%Y%m%d%H%M%S")
+        ActiveRecord::Generators::Base.next_migration_number(dirname)
       end
-      
-      def create_migration
-        migration_template 'create_gotcha_pon_histories.rb.erb',
-                         'db/migrate/create_gotcha_pon_histories.rb'
+
+      def create_history_migration
+        migration_template "create_gotcha_pon_histories.rb", "db/migrate/create_gotcha_pon_histories.rb"
       end
-      
-      def create_model
-        template 'history.rb.erb', 'app/models/gotcha_pon/history.rb'
-      end
-      
+
       def create_initializer
-        template 'gotcha_pon.rb.erb', 'config/initializers/gotcha_pon.rb'
+        template "gotcha_pon.rb", "config/initializers/gotcha_pon.rb"
       end
     end
   end
