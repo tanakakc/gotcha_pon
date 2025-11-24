@@ -23,7 +23,7 @@ jobs:
         bundler-cache: true
 
     - name: Run tests
-      run: bundle exec ruby test/ponnable_test.rb
+      run: bundle exec ruby test/gotchable_test.rb
 
   lint:
     runs-on: ubuntu-latest
