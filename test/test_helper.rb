@@ -1,9 +1,15 @@
 # frozen_string_literal: true
 
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
-require "gotcha_pon"
-require "minitest/autorun"
+
+# Rails environment setup
+ENV["RAILS_ENV"] ||= "test"
+
+require "rails"
 require "active_record"
+require "active_support/test_case"
+require "minitest/autorun"
+require "gotcha_pon"
 
 # Setup in-memory SQLite database for testing
 ActiveRecord::Base.establish_connection(
@@ -18,11 +24,16 @@ ActiveRecord::Schema.define do
     t.integer :weight
     t.timestamps
   end
-  
+
+  create_table :test_users do |t|
+    t.string :name
+    t.timestamps
+  end
+
   create_table :gotcha_pon_histories do |t|
-    t.references :user, polymorphic: true, null: false, index: true
+    t.references :user, polymorphic: true, null: true, index: true
     t.references :gotchable, polymorphic: true, null: false, index: true
-    t.datetime :executed_at, null: false, default: -> { 'CURRENT_TIMESTAMP' }
+    t.datetime :executed_at, null: false, default: -> { "CURRENT_TIMESTAMP" }
     t.json :metadata, default: {}
     t.timestamps
   end
@@ -30,4 +41,7 @@ end
 
 class TestItem < ActiveRecord::Base
   include GotchaPon::Gotchable
+end
+
+class TestUser < ActiveRecord::Base
 end

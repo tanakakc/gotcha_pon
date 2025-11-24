@@ -24,6 +24,4 @@ Gem::Specification.new do |s|
     "changelog_uri"     => "#{s.homepage}/blob/main/CHANGELOG.md",
     "rubygems_mfa_required" => "true"
   }
-
-  s.add_dependency "rails", ">= 8.0"
 end
