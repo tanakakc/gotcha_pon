@@ -8,7 +8,7 @@ module GotchaPon
 
     class_methods do
       def gotcha_pon(count: 1)
-        items = where(id: pluck(:id).sample(count)).to_a
+        items = order(random_order).limit(count).to_a
         count == 1 ? items.first : items
       end
 
@@ -17,6 +17,17 @@ module GotchaPon
         GotchaPon::History.record_gotcha(user: user, items: Array(items))
         items
       end
+
+      private
+
+        def random_order
+          case connection.adapter_name
+          when /mysql/i
+            Arel.sql("RAND()")
+          else # PostgreSQL, SQLite
+            Arel.sql("RANDOM()")
+          end
+        end
     end
   end
 end
