@@ -7,7 +7,7 @@ Rails plugin that adds gacha (lottery) functionality to any ActiveRecord model w
 Add this line to your application's Gemfile:
 
 ```ruby
-gem "gotcha_pon", git: "https://github.com/tanakakc/gotcha_pon.git"
+gem "gotcha_pon", github: "tanakakc/gotcha_pon"
 ```
 
 And then execute:
