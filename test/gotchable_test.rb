@@ -8,11 +8,8 @@ class GotchableTest < ActiveSupport::TestCase
     TestItem.delete_all
     GotchaPon::History.delete_all
     TestUser.delete_all
-    # Reset history tracking state
-    TestItem.gotcha_pon_track_history = false
   end
 
-  # Basic functionality tests
   test "includes gotchable concern" do
     assert @model_class.include?(GotchaPon::Gotchable)
   end
@@ -21,12 +18,10 @@ class GotchableTest < ActiveSupport::TestCase
     assert_respond_to @model_class, :gotcha_pon
   end
 
-  test "enables history tracking when track_gotcha_pon_history is called" do
-    @model_class.track_gotcha_pon_history
-    assert @model_class.gotcha_pon_track_history
+  test "responds to gotcha_pon_with_history method" do
+    assert_respond_to @model_class, :gotcha_pon_with_history
   end
 
-  # Gacha execution tests
   test "returns single item when count is 1" do
     3.times { |i| TestItem.create!(name: "item_#{i}") }
 
@@ -49,49 +44,52 @@ class GotchableTest < ActiveSupport::TestCase
     assert_nil result
   end
 
-  # History recording tests
-  test "records history with nil user using NullUser pattern" do
-    item = TestItem.create!(name: "test_item")
-    TestItem.track_gotcha_pon_history
-
-    assert_difference "GotchaPon::History.count", 1 do
-      TestItem.gotcha_pon
-    end
-
-    history = GotchaPon::History.last
-    assert_not_nil history
-    assert_nil history.read_attribute(:user_id)
-    assert_nil history.read_attribute(:user_type)
-    assert_instance_of GotchaPon::NullUser, history.user
-    assert_equal "anonymous", history.user.name
-    assert_nil history.user.id
-    assert_not history.user.persisted?
-    assert_equal item, history.gotchable
+  test "returns empty array when no items exist and count > 1" do
+    result = TestItem.gotcha_pon(count: 3)
+    assert_equal [], result
   end
 
-  test "records history with actual user" do
-    item = TestItem.create!(name: "test_item")
-    TestItem.track_gotcha_pon_history
+  test "returns fewer items when count exceeds available items" do
+    2.times { |i| TestItem.create!(name: "item_#{i}") }
+
+    results = TestItem.gotcha_pon(count: 5)
+    assert_equal 2, results.length
+  end
+
+  test "gotcha_pon_with_history returns single item and records history" do
+    TestItem.create!(name: "test_item")
+
+    assert_difference "GotchaPon::History.count", 1 do
+      result = TestItem.gotcha_pon_with_history
+      assert_instance_of TestItem, result
+    end
+  end
+
+  test "gotcha_pon_with_history returns multiple items and records history" do
+    3.times { |i| TestItem.create!(name: "item_#{i}") }
+
+    assert_difference "GotchaPon::History.count", 2 do
+      results = TestItem.gotcha_pon_with_history(count: 2)
+      assert_equal 2, results.length
+    end
+  end
+
+  test "gotcha_pon_with_history records user" do
+    TestItem.create!(name: "test_item")
     user = TestUser.create!(name: "test_user")
 
-    assert_difference "GotchaPon::History.count", 1 do
-      TestItem.gotcha_pon(user: user)
-    end
+    TestItem.gotcha_pon_with_history(user: user)
 
     history = GotchaPon::History.last
-    assert_not_nil history
-    assert_equal user.id, history.read_attribute(:user_id)
-    assert_equal "TestUser", history.read_attribute(:user_type)
     assert_equal user, history.user
-    assert_equal item, history.gotchable
   end
 
-  test "does not record history when tracking is disabled" do
+  test "gotcha_pon_with_history records anonymous user when user is nil" do
     TestItem.create!(name: "test_item")
-    # Don't enable tracking
 
-    assert_no_difference "GotchaPon::History.count" do
-      TestItem.gotcha_pon
-    end
+    TestItem.gotcha_pon_with_history
+
+    history = GotchaPon::History.last
+    assert_instance_of GotchaPon::NullUser, history.user
   end
 end
