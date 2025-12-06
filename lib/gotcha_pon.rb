@@ -7,5 +7,4 @@ require_relative "gotcha_pon/history"
 require_relative "gotcha_pon/null_user"
 
 module GotchaPon
-  # Gem エントリーポイント
 end

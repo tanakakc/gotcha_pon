@@ -15,7 +15,6 @@ And then execute:
 ```bash
 $ bundle install
 $ rails generate gotcha_pon:install
-$ rails db:migrate
 ```
 
 ## Usage
@@ -34,21 +33,23 @@ item = Item.gotcha_pon
 items = Item.gotcha_pon(count: 3)
 ```
 
-### History Tracking
+### History Tracking (Optional)
 
-Enable history tracking to record gacha executions:
+To enable history tracking, run the generator with `--with-history` option:
+
+```bash
+$ rails generate gotcha_pon:install --with-history
+$ rails db:migrate
+```
+
+Then use `gotcha_pon_with_history` method:
 
 ```ruby
-class Item < ApplicationRecord
-  include GotchaPon::Gotchable
-  track_gotcha_pon_history
-end
-
-# Execute gacha with user tracking
-Item.gotcha_pon(user: current_user)
+# Execute gacha with history tracking
+Item.gotcha_pon_with_history(user: current_user)
 
 # Execute gacha without user (anonymous)
-Item.gotcha_pon
+Item.gotcha_pon_with_history(count: 3)
 
 # View history
 GotchaPon::History.recent

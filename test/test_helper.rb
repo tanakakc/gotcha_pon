@@ -30,6 +30,7 @@ ActiveRecord::Schema.define do
     t.timestamps
   end
 
+  # History table for optional history tracking tests
   create_table :gotcha_pon_histories do |t|
     t.references :user, polymorphic: true, null: true, index: true
     t.references :gotchable, polymorphic: true, null: false, index: true
