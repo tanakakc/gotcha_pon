@@ -23,7 +23,7 @@ jobs:
         bundler-cache: true
 
     - name: Run tests
-      run: bundle exec ruby test/gotchable_test.rb
+      run: bundle exec ruby -Itest -e "Dir['test/*_test.rb'].each { |f| require File.expand_path(f) }"
 
   lint:
     runs-on: ubuntu-latest
