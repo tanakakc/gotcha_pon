@@ -44,5 +44,11 @@ class TestItem < ActiveRecord::Base
   include GotchaPon::Gotchable
 end
 
+class WeightedTestItem < ActiveRecord::Base
+  self.table_name = "test_items"
+  include GotchaPon::Gotchable
+  gotcha_pon_weight column: :weight
+end
+
 class TestUser < ActiveRecord::Base
 end
