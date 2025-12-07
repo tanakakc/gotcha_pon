@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    gotcha_pon (0.2.0)
+    gotcha_pon (0.3.0)
 
 GEM
   remote: https://rubygems.org/
