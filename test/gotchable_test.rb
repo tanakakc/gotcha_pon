@@ -92,4 +92,42 @@ class GotchableTest < ActiveSupport::TestCase
     history = GotchaPon::History.last
     assert_instance_of GotchaPon::NullUser, history.user
   end
+
+  test "responds to gotcha_pon_weight class method" do
+    assert_respond_to TestItem, :gotcha_pon_weight
+  end
+
+  test "weighted gotcha_pon returns multiple items" do
+    WeightedTestItem.delete_all
+    3.times { |i| WeightedTestItem.create!(name: "item_#{i}", weight: 10) }
+
+    results = WeightedTestItem.gotcha_pon(count: 2)
+    assert_equal 2, results.length
+  end
+
+  test "weighted gotcha_pon excludes zero weight items" do
+    WeightedTestItem.delete_all
+    WeightedTestItem.create!(name: "zero", weight: 0)
+    WeightedTestItem.create!(name: "positive", weight: 5)
+
+    100.times do
+      result = WeightedTestItem.gotcha_pon
+      assert_equal "positive", result.name
+    end
+  end
+
+  test "weighted gotcha_pon respects weight probability" do
+    WeightedTestItem.delete_all
+    WeightedTestItem.create!(name: "high", weight: 90)
+    WeightedTestItem.create!(name: "low", weight: 10)
+
+    results = Hash.new(0)
+    1000.times do
+      item = WeightedTestItem.gotcha_pon
+      results[item.name] += 1
+    end
+
+    # high should be selected significantly more often (around 90%)
+    assert results["high"] > results["low"] * 2, "High weight item should be selected much more often"
+  end
 end
